@@ -1,6 +1,6 @@
 const moment = require("moment");
 const store = require('nedb');
-
+const talk = require("./talk");
 /* 
 now,nextEffect
 0 : 忘れ,特になし
@@ -49,5 +49,5 @@ var db = new store({
   autoload: true
 });
 
-console.log(baseJson);
-
+console.log(memoryBase);
+console.log(talk("クラムボン"));

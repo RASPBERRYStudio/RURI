@@ -5,7 +5,10 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
+    "mecab-async": "^0.1.2",
     "moment": "^2.22.2",
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "qs": "^6.5.2"
   }
 }
