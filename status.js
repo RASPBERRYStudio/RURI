@@ -1,6 +1,9 @@
 const moment = require("moment");
 const store = require('nedb');
+const Mastodon = require('mastodon-api');
 const talk = require("./talk");
+const conf = require("./config");
+
 /* 
 now,nextEffect
 0 : 忘れ,特になし
@@ -50,4 +53,21 @@ var db = new store({
 });
 
 console.log(memoryBase);
-console.log(talk("クラムボン"));
+console.log(talk("ハロハロー"));
+
+const mstdn = new Mastodon({
+  api_url: `https://${conf.server}/api/v1/`,
+  access_token: conf.token,
+});
+const listener = mstdn.stream('streaming/user');
+
+listener.on('message', (msg) => {
+  console.log(1);
+  if (msg.event === 'notification' && msg.data.type === 'mention') {
+    console.log(2);
+    const content = msg.data.status.content.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '').replace(conf.id, '').replace(/\s/g, '');
+    const status = '@' + msg.data.status.account.acct + ' ' + talk(content);
+    console.log(status + " :POST!");
+    mstdn.post('statuses', { status, visibility: msg.data.status.visibility, in_reply_to_id: msg.data.status.id }, err => !!err);
+  }
+});
