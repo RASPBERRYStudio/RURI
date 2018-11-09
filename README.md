@@ -1,8 +1,8 @@
 # 瑠璃  
 
-1. setup.sh を実行
-2. config.example.jsをconfig.jsにリネームし内容を記述
-3. node talk.js
+1. ./setup.sh
+2. cp config.example.js config.js
+3. node status.js
 
 ---
 
